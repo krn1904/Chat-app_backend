@@ -3,12 +3,6 @@ const User = require('../Tables/User')
 
 const CreateUser = async (req, res) => {
     try {
-      // if (db.readyState === 1) {
-      //   console.log('Connected to MongoDB');
-      // } else {
-      //   console.log('Not connected to MongoDB');
-      // }
-      
       const { email, password } = req.body;
       console.log(req.body);
   
