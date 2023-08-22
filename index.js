@@ -1,16 +1,15 @@
 const express = require('express');
-const db = require('./db'); // Adjust the path to your db.js file
 const { createServer } = require("http");
 const mongoose = require('mongoose');
 const { Server } = require("socket.io"); 
 const cors = require('cors') // Import the cors middleware
 const { CreateUser } = require('./UserController/Users');
-// const { connect } = require('./db')
+const config = require('./config.json')
+
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer)
 const port = 3002;
-const uri = 'mongodb+srv://karanssoni2002:KaranMongo2002@karanscluster.j4ai1as.mongodb.net/';
 
 
 app.use(cors()); // Use the cors middleware
@@ -36,11 +35,14 @@ async function startServer() {
     console.log(`Server is listening at http://localhost:${port}`);
   });
 }
+
+//API 
 app.post('/createUser',CreateUser)
+
 
 async function connect() {
   try {
-    await mongoose.connect(uri, {
+    await mongoose.connect(config.MongoDb_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -49,4 +51,5 @@ async function connect() {
     console.error('MongoDB connection error:', error);
   }
 }
+
 startServer();
